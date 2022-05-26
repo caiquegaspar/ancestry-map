@@ -31,7 +31,6 @@ const getters = {
 		coverage_areas: CoverageAreasInterface;
 	}): ApiReturnInterface => {
 		const { user_info, coverage_areas } = state;
-		console.log(user_info);
 
 		const regionsArr = Object.entries(user_info.ancestry_info);
 		const regions = regionsArr.reduce(
@@ -40,7 +39,7 @@ const getters = {
 					...acc,
 					{
 						code: obj[0],
-						percentage: obj[1] + "%",
+						percentage: obj[1],
 						name: coverage_areas[obj[0]].label,
 					},
 				]),

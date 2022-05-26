@@ -1,9 +1,22 @@
 <script setup lang="ts">
 import type { ApiReturnInterface } from "interfaces/api.interface";
+import { onMounted, ref, type Ref } from "vue";
 
 defineProps<{
 	userData: ApiReturnInterface;
 }>();
+
+const animatedNumber: Ref<number> = ref(0);
+
+const animateNumbers = (num: number = 100) => {
+	animatedNumber.value++;
+
+	if (animatedNumber.value < num) setTimeout(() => animateNumbers(), 25);
+};
+
+console.log();
+
+onMounted(() => setTimeout(() => animateNumbers(), 500));
 </script>
 
 <template>
@@ -35,7 +48,13 @@ defineProps<{
 					<div class="w-12 h-[75px] border-dashed border-l-2 border-b-2"></div>
 					<div class="results_circle">
 						<div class="results_circle_border"></div>
-						<div class="results_circle_text">{{ region.percentage }}</div>
+						<div class="results_circle_text">
+							{{
+								animatedNumber >= region.percentage
+									? region.percentage
+									: animatedNumber
+							}}%
+						</div>
 					</div>
 				</div>
 			</div>

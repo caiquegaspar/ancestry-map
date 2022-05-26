@@ -2,6 +2,7 @@
 import { useRouter } from "vue-router";
 import { useMapStore } from "stores/mapData";
 import { storeToRefs } from "pinia";
+import { onMounted, ref, type Ref } from "vue";
 
 import MapComponent from "components/MapComponent.vue";
 import GraphsComponent from "components/GraphsComponent.vue";
@@ -10,7 +11,28 @@ const router = useRouter();
 const mapStore = useMapStore();
 const { userData, mapData } = storeToRefs(mapStore);
 
+const showModal: Ref<boolean> = ref(false);
+const notify: Ref<boolean> = ref(false);
+const link: Ref<string> = ref("");
+
 const printReport = () => window.print();
+const shareToFacebook = () => {
+	const url = "https://www.facebook.com/sharer/sharer.php?u=";
+	window.open(`${url}${link.value}`, "_blank");
+};
+const shareToTwitter = () => {
+	const url = "https://twitter.com/intent/tweet?text=";
+	window.open(`${url}${link.value}`, "_blank");
+};
+const copyToClipboard = () =>
+	navigator.clipboard.writeText(link.value).then(() => notifyTextCopied());
+const notifyTextCopied = () => {
+	notify.value = true;
+
+	setTimeout(() => (notify.value = false), 2000);
+};
+
+onMounted(() => (link.value = window.location.href));
 </script>
 
 <template>
@@ -49,7 +71,7 @@ const printReport = () => window.print();
 						<img class="w-6" src="@/assets/print.svg" alt="" />
 						<div class="ml-1 text-lg">Print</div>
 					</button>
-					<button class="share_button">
+					<button class="share_button" @click="showModal = true">
 						<img class="w-6" src="@/assets/share.svg" alt="" />
 						<div class="ml-1 text-lg">Share</div>
 					</button>
@@ -88,7 +110,7 @@ const printReport = () => window.print();
 					<img class="w-6" src="@/assets/print.svg" alt="" />
 					<div class="ml-1 text-lg">Print</div>
 				</button>
-				<button class="share_button">
+				<button class="share_button" @click="showModal = true">
 					<img class="w-6" src="@/assets/share.svg" alt="" />
 					<div class="ml-1 text-lg">Share</div>
 				</button>
@@ -117,6 +139,52 @@ const printReport = () => window.print();
 				</div>
 			</div>
 		</footer>
+
+		<div class="share_modal_container" :class="{ show_modal: showModal }">
+			<div class="modal_background" @click="showModal = false"></div>
+			<div class="modal_card">
+				<div class="card_border"></div>
+				<div class="close_button">
+					<button
+						class="w-6 h-6 rounded-md"
+						title="Close button"
+						@click="showModal = false"
+					>
+						<img src="@/assets/close.svg" alt="Close button" />
+					</button>
+				</div>
+				<div class="card_content">
+					<div class="font-medium mb-2">Share your results</div>
+					<div class="flex items-center justify-center">
+						<button
+							class="w-10 h-10 bg-white p-1 mx-1 rounded-md"
+							title="Share to Facebook "
+							@click="shareToFacebook"
+						>
+							<img src="@/assets/facebook-logo.svg" alt="Facebook share button" />
+						</button>
+						<button
+							class="w-10 h-10 bg-white p-1 mx-1 rounded-md"
+							title="Share to Twitter "
+							@click="shareToTwitter"
+						>
+							<img src="@/assets/twitter-logo.svg" alt="Twitter share button" />
+						</button>
+						<button
+							class="w-10 h-10 bg-white p-1 mx-1 rounded-md"
+							title="Copy to Clipboard"
+							@click="copyToClipboard"
+						>
+							<img src="@/assets/copy.svg" alt="Clipboard share button" />
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="notify_card" :class="notify ? 'show_notify' : ''">
+			Text copied to clipboard
+		</div>
 	</div>
 </template>
 
@@ -144,5 +212,45 @@ const printReport = () => window.print();
 .graphs_container {
 	@apply flex flex-col-reverse items-center justify-center w-full px-0 pt-10;
 	@apply md:flex-row md:items-start md:justify-around md:px-4 md:pt-12;
+}
+
+.share_modal_container {
+	@apply block fixed top-0 left-0 w-full h-full z-30;
+	@apply transition-all ease-in-out duration-300 invisible opacity-0;
+	@apply flex items-center justify-center text-white;
+}
+
+.show_modal {
+	@apply visible opacity-100;
+}
+
+.modal_background {
+	@apply absolute top-0 left-0 w-full h-full z-30 bg-[#0000009a];
+}
+
+.close_button {
+	@apply absolute -top-[9px] -right-[9px] flex z-40;
+}
+
+.modal_card {
+	@apply relative z-40 p-[0.15rem] flex items-center justify-center;
+}
+
+.card_border {
+	@apply absolute rounded-md w-full h-full;
+	@apply bg-gradient-to-r from-[#66aac2] to-[#336478];
+}
+
+.card_content {
+	@apply relative rounded-md w-full h-full bg-[#336478] py-2 px-3;
+}
+
+.notify_card {
+	@apply -bottom-10 bg-yellow-200 fixed py-1 px-3 rounded-md font-medium;
+	@apply invisible z-40 transition-all ease-in-out duration-500;
+}
+
+.show_notify {
+	@apply visible bottom-3;
 }
 </style>

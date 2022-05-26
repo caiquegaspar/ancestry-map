@@ -5,7 +5,7 @@ export interface ApiReturnInterface {
 
 export interface AncestryInfo {
 	code:       string;
-	percentage: string;
+	percentage: number;
 	name:       string;
 }
 
