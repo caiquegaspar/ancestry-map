@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { onMounted} from "vue";
 import { storeToRefs } from "pinia";
 import { useMapStore } from "../stores/mapData";
@@ -133,4 +133,4 @@ onMounted(() => {
 path:hover {
 	fill: url(#MyGradient);
 }
-</style>
+</style> -->
