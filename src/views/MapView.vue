@@ -9,6 +9,8 @@ import GraphsComponent from "components/GraphsComponent.vue";
 const router = useRouter();
 const mapStore = useMapStore();
 const { userData, mapData } = storeToRefs(mapStore);
+
+const printReport = () => window.print();
 </script>
 
 <template>
@@ -43,7 +45,7 @@ const { userData, mapData } = storeToRefs(mapStore);
 				</div>
 
 				<div class="share_buttons hidden md:flex text-white">
-					<button class="print_button">
+					<button class="print_button" @click="printReport">
 						<img class="w-6" src="@/assets/print.svg" alt="" />
 						<div class="ml-1 text-lg">Print</div>
 					</button>
@@ -82,7 +84,7 @@ const { userData, mapData } = storeToRefs(mapStore);
 
 		<footer class="block md:hidden">
 			<div class="share_buttons flex text-white mb-10">
-				<button class="print_button">
+				<button class="print_button" @click="printReport">
 					<img class="w-6" src="@/assets/print.svg" alt="" />
 					<div class="ml-1 text-lg">Print</div>
 				</button>

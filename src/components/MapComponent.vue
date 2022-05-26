@@ -136,11 +136,17 @@ function hideTooltip() {
 			preserveAspectRatio="xMidYMid slice"
 		>
 			<defs>
-				<linearGradient id="MyGradient">
+				<linearGradient id="hoverGradient">
 					<stop offset="0%" stop-color="#66aac2" />
 					<stop offset="100%" stop-color="#336478" />
 				</linearGradient>
+
+				<linearGradient id="highlightGradient">
+					<stop offset="0%" stop-color="#ffad33" />
+					<stop offset="100%" stop-color="#777833" />
+				</linearGradient>
 			</defs>
+
 			<g id="zoom_area">
 				<rect width="100%" height="100%" />
 				<path
@@ -148,7 +154,7 @@ function hideTooltip() {
 					:key="country.initials"
 					:d="country.path"
 					:data-code="country.initials"
-					:fill="country.highlighted ? 'url(#MyGradient)' : '#fff'"
+					:fill="country.highlighted ? 'url(#highlightGradient)' : '#fff'"
 					fill-opacity="1"
 					stroke="#ECECEC"
 					stroke-width="0.8"
@@ -164,7 +170,7 @@ function hideTooltip() {
 
 <style scoped>
 path:hover {
-	fill: url(#MyGradient);
+	fill: url(#hoverGradient);
 }
 
 #tooltip {

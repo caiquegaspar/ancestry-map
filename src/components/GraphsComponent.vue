@@ -7,7 +7,9 @@ defineProps<{
 </script>
 
 <template>
-	<div class="flex flex-col mb-10 mt-10 md:mt-0 items-center justify-center text-white">
+	<div
+		class="flex flex-col mb-10 mt-10 md:mt-0 items-center justify-center text-white"
+	>
 		<div class="graph_title">
 			<div class="graph_title_border"></div>
 			<div class="graph_title_text">Ethnicity Estimate</div>

@@ -31,6 +31,7 @@ const getters = {
 		coverage_areas: CoverageAreasInterface;
 	}): ApiReturnInterface => {
 		const { user_info, coverage_areas } = state;
+		console.log(user_info);
 
 		const regionsArr = Object.entries(user_info.ancestry_info);
 		const regions = regionsArr.reduce(
@@ -49,7 +50,7 @@ const getters = {
 			ancestry_info: regions,
 			personal_info: user_info.personal_info,
 		};
-		
+
 		return returnArr;
 	},
 };
