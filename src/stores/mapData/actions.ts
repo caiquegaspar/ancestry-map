@@ -1,19 +1,13 @@
-// import { api } from '../../boot/axios'
+import { api } from "configs/axios";
 
 const actions = {
-  // async getEnterprisesList(whoiam: string) {
-  //   const responseList = await api({
-  //     url: 'api/djn018/v1/UsuarioFornecedor/',
-  //     method: 'GET',
-  //     params: {
-  //       usuario: whoiam,
-  //       expand: 'fornecedor.usuario_fornecedor.usuario',
-  //     },
-  //   });
-  //   const result = Object.assign([], responseList.data.results);
+	async getUserData(): Promise<void> {
+		const response = await api({ method: "GET" });
+		const result = response.data.resposta;
 
-  //   this.enterprises = [...result];
-  // },
+		// @ts-ignore
+		this.user_info = result;
+	},
 };
 
 export default { ...actions };

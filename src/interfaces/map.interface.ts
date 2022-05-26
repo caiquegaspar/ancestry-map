@@ -1,5 +1,6 @@
 export interface MapInterface {
-    initials: string;
-    path:     string;
-    name:     string;
+    initials:       string;
+    path:           string;
+    name:           string;
+    highlighted:    boolean;
 }
