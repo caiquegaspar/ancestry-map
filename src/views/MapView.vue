@@ -101,7 +101,11 @@ onMounted(() => (link.value = window.location.href));
 
 		<div class="graphs_container">
 			<GraphsComponent :user-data="userData" class="w-full md:w-1/4" />
-			<MapComponent :map-data="mapData" class="w-full md:w-4/6" />
+			<MapComponent
+				:user-data="userData"
+				:map-data="mapData"
+				class="w-full md:w-4/6"
+			/>
 		</div>
 
 		<footer class="block md:hidden">

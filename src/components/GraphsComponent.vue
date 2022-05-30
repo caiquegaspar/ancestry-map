@@ -41,7 +41,10 @@ onMounted(() => setTimeout(() => animateNumbers(), 500));
 				<div class="flex">
 					<div class="w-8 h-8 relative">
 						<div class="flex items-center justify-start absolute left-[24px] -top-3">
-							<div class="rounded-full w-4 h-4 bg-[#66aac2]"></div>
+							<div
+								class="rounded-full w-4 h-4"
+								:style="`background-color: ${region.colors[0]}`"
+							></div>
 							<div class="w-40 ml-2">{{ region.name }}</div>
 						</div>
 					</div>

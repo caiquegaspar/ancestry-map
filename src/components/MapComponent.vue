@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref, type Ref } from "vue";
 import type { MapInterface } from "interfaces/map.interface";
+import type { ApiReturnInterface } from "interfaces/api.interface";
 
 defineProps<{
 	mapData: MapInterface[];
+	userData: ApiReturnInterface;
 }>();
 
 type startType = { x: number; y: number };
@@ -87,20 +89,20 @@ onMounted(() => {
 		let posX: number = e.offsetX - start.value.x;
 		let posY: number = e.offsetY - start.value.y;
 
-		let mutablePointers: DOMRect = zoomArea.getBoundingClientRect();
-		console.log({
-			event: e,
-			mapPointers: mapPointers,
-			mutablePointers: mutablePointers,
-			pointY: pointY.value,
-			pointX: pointX.value,
-			pointerY: pointerY.value,
-			pointerX: pointerX.value,
-			posX: posX,
-			posY: posY,
-			start_value_y: start.value.y,
-			scale: scale.value,
-		});
+		// let mutablePointers: DOMRect = zoomArea.getBoundingClientRect();
+		// console.log({
+		// 	event: e,
+		// 	mapPointers: mapPointers,
+		// 	mutablePointers: mutablePointers,
+		// 	pointY: pointY.value,
+		// 	pointX: pointX.value,
+		// 	pointerY: pointerY.value,
+		// 	pointerX: pointerX.value,
+		// 	posX: posX,
+		// 	posY: posY,
+		// 	start_value_y: start.value.y,
+		// 	scale: scale.value,
+		// });
 
 		pointX.value = Math.min(Math.max(posX, pointerX.value), 0);
 		pointY.value = Math.min(Math.max(posY, pointerY.value), 0);
@@ -173,9 +175,13 @@ function hideTooltip() {
 					<stop offset="100%" stop-color="#336478" />
 				</linearGradient>
 
-				<linearGradient id="highlightGradient">
-					<stop offset="0%" stop-color="#ffad33" />
-					<stop offset="100%" stop-color="#777833" />
+				<linearGradient
+					v-for="area in userData.ancestry_info"
+					:key="area.colors[0]"
+					:id="`gradient${area.colors[0]}`"
+				>
+					<stop offset="0%" :stop-color="area.colors[0]" />
+					<stop offset="100%" :stop-color="area.colors[1]" />
 				</linearGradient>
 			</defs>
 
@@ -186,7 +192,7 @@ function hideTooltip() {
 					:key="country.initials"
 					:d="country.path"
 					:data-code="country.initials"
-					:fill="country.highlighted ? 'url(#highlightGradient)' : '#fff'"
+					:fill="country.highlighted ? `url(#gradient${country.colors[0]})` : '#fff'"
 					fill-opacity="1"
 					stroke="#ECECEC"
 					stroke-width="0.8"

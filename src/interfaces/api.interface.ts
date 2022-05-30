@@ -7,6 +7,7 @@ export interface AncestryInfo {
 	code:       string;
 	percentage: number;
 	name:       string;
+	colors:     string[];
 }
 
 export interface PersonalInfo {
