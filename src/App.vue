@@ -13,7 +13,7 @@ onBeforeMount(
 </script>
 
 <template>
-	<div class="bg-black w-full h-full min-w-screen min-h-screen">
+	<div class="bg-black w-full h-full min-w-screen min-h-screen select-none">
 		<RouterView v-if="!loading" v-slot="{ Component }">
 			<Transition name="scale" mode="out-in">
 				<KeepAlive>
